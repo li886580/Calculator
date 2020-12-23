@@ -1,0 +1,10 @@
+.content {
+  display: flex;
+  justify-content: center;
+  .calculatorBody {
+    display: flex;
+    width: 450px;
+    height: 600px;
+    background-color: tomato;
+  }
+}
