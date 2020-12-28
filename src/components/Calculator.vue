@@ -1,8 +1,88 @@
-<template src="./Calculator.html">
+<template>
+  <div class="content">
+    <div class="calculatorBody">
+      <div class="showValue">
+        <p>{{ vvv }}</p>
+      </div>
+      <div class="btnGroup">
+        <div class="btnGroup_negative btnGroup_operator">
+          <p>+/-</p>
+        </div>
+        <div class="btnGroup_percent btnGroup_operator">
+          <p>%</p>
+        </div>
+        <div class="btnGroup_clear btnGroup_number">
+          <p>C</p>
+        </div>
+        <div class="btnGroup_backspace btnGroup_operator">
+          <p>◄</p>
+        </div>
+        <div class="btnGroup_7 btnGroup_number">
+          <p>7</p>
+        </div>
+        <div class="btnGroup_8 btnGroup_number">
+          <p>8</p>
+        </div>
+        <div class="btnGroup_9 btnGroup_number">
+          <p>9</p>
+        </div>
+        <div class="btnGroup_division btnGroup_operator">
+          <p>/</p>
+        </div>
+        <div class="btnGroup_4 btnGroup_number">
+          <p>4</p>
+        </div>
+        <div class="btnGroup_5 btnGroup_number">
+          <p>5</p>
+        </div>
+        <div class="btnGroup_6 btnGroup_number">
+          <p>6</p>
+        </div>
+        <div class="btnGroup_multiplication btnGroup_operator">
+          <p>*</p>
+        </div>
+        <div class="btnGroup_1 btnGroup_number" @click="counter">
+          <p>1</p>
+        </div>
+        <div class="btnGroup_2 btnGroup_number">
+          <p>2</p>
+        </div>
+        <div class="btnGroup_3 btnGroup_number">
+          <p>3</p>
+        </div>
+        <div class="btnGroup_subtraction btnGroup_operator">
+          <p>-</p>
+        </div>
+        <div class="btnGroup_0 btnGroup_number">
+          <p>0</p>
+        </div>
+        <div class="btnGroup_point btnGroup_number">
+          <p>.</p>
+        </div>
+        <div class="btnGroup_equals btnGroup_operator">
+          <p>=</p>
+        </div>
+        <div class="btnGroup_addition btnGroup_operator">
+          <p>+</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+export default {
+  data() {
+    return {
+      vvv: '',
+    } 
+  },
+  methods:{
+    counter() {
+      this.vvv = "1";
+    }
+  }
+};
 </script>
 
-<style src="./Calculator.css">
-</style>
+<style src="./Calculator.css"></style>
