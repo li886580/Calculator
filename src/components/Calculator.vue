@@ -2,7 +2,7 @@
   <div class="content">
     <div class="calculatorBody">
       <div class="showValue">
-        <p>{{ vvv }}</p>
+        <p>{{ display }}</p>
       </div>
       <div class="btnGroup">
         <div class="btnGroup_negative btnGroup_operator">
@@ -11,49 +11,49 @@
         <div class="btnGroup_percent btnGroup_operator">
           <p>%</p>
         </div>
-        <div class="btnGroup_clear btnGroup_number">
+        <div class="btnGroup_clear btnGroup_number" @click="clear()">
           <p>C</p>
         </div>
-        <div class="btnGroup_backspace btnGroup_operator">
+        <div class="btnGroup_backspace btnGroup_operator" @click="backspace()">
           <p>◄</p>
         </div>
-        <div class="btnGroup_7 btnGroup_number">
+        <div class="btnGroup_7 btnGroup_number" @click="counter('7')">
           <p>7</p>
         </div>
-        <div class="btnGroup_8 btnGroup_number">
+        <div class="btnGroup_8 btnGroup_number" @click="counter('8')">
           <p>8</p>
         </div>
-        <div class="btnGroup_9 btnGroup_number">
+        <div class="btnGroup_9 btnGroup_number" @click="counter('9')">
           <p>9</p>
         </div>
         <div class="btnGroup_division btnGroup_operator">
           <p>/</p>
         </div>
-        <div class="btnGroup_4 btnGroup_number">
+        <div class="btnGroup_4 btnGroup_number" @click="counter('4')">
           <p>4</p>
         </div>
-        <div class="btnGroup_5 btnGroup_number">
+        <div class="btnGroup_5 btnGroup_number" @click="counter('5')">
           <p>5</p>
         </div>
-        <div class="btnGroup_6 btnGroup_number">
+        <div class="btnGroup_6 btnGroup_number" @click="counter('6')">
           <p>6</p>
         </div>
         <div class="btnGroup_multiplication btnGroup_operator">
           <p>*</p>
         </div>
-        <div class="btnGroup_1 btnGroup_number" @click="counter">
+        <div class="btnGroup_1 btnGroup_number" @click="counter('1')">
           <p>1</p>
         </div>
-        <div class="btnGroup_2 btnGroup_number">
+        <div class="btnGroup_2 btnGroup_number" @click="counter('2')">
           <p>2</p>
         </div>
-        <div class="btnGroup_3 btnGroup_number">
+        <div class="btnGroup_3 btnGroup_number" @click="counter('3')">
           <p>3</p>
         </div>
         <div class="btnGroup_subtraction btnGroup_operator">
           <p>-</p>
         </div>
-        <div class="btnGroup_0 btnGroup_number">
+        <div class="btnGroup_0 btnGroup_number" @click="counter('0')">
           <p>0</p>
         </div>
         <div class="btnGroup_point btnGroup_number">
@@ -74,14 +74,31 @@
 export default {
   data() {
     return {
-      vvv: '',
+      display: '0',
     } 
   },
+
   methods:{
-    counter() {
-      this.vvv = "1";
+    counter(number) {
+      if (this.display == '0'){
+        this.display = number;
+      }
+      else {
+      this.display += number;
+      }
+    },
+
+    clear() {
+      this.display ='0'
+    },
+
+    backspace() {
+      this.display = this.display.slice(0,-1);
+      if (this.display == ''){
+          this.display = 0;
+        }
+      },
     }
-  }
 };
 </script>
 

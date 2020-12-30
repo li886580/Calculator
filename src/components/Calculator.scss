@@ -19,13 +19,14 @@ p{
     box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.3);
     .showValue {
       display: flex;
+      align-items: center;
+      justify-content: flex-end;
       width: 245px;
       height: 50px;
       background-color: #ffffff;
       border-radius: 10px;
       box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.3);
       margin-bottom: 23px;
-      
     }
     .btnGroup {
       display: flex;
