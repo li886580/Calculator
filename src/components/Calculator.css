@@ -48,6 +48,9 @@ p {
   border-radius: 10px;
   -webkit-box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.3);
           box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.3);
+  padding: 0 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   margin-bottom: 23px;
 }
 

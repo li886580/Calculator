@@ -8,7 +8,7 @@
         <div class="btnGroup_negative btnGroup_operator">
           <p>+/-</p>
         </div>
-        <div class="btnGroup_percent btnGroup_operator">
+        <div class="btnGroup_percent btnGroup_operator" @click="percent()">
           <p>%</p>
         </div>
         <div class="btnGroup_clear btnGroup_number" @click="clear()">
@@ -56,7 +56,7 @@
         <div class="btnGroup_0 btnGroup_number" @click="counter('0')">
           <p>0</p>
         </div>
-        <div class="btnGroup_point btnGroup_number">
+        <div class="btnGroup_point btnGroup_number" @click="point()">
           <p>.</p>
         </div>
         <div class="btnGroup_equals btnGroup_operator">
@@ -80,25 +80,41 @@ export default {
 
   methods:{
     counter(number) {
-      if (this.display == '0'){
-        this.display = number;
+      if (this.display == '0'){ //若display為0則直接取代0，反之則+上字串
+        this.display = number; 
       }
       else {
-      this.display += number;
+        this.display += number;
+      }
+    //或是可以用這種判斷式和連接字串的方法
+    // counter(number) {
+    //   this.display = (this.display === 0) ? `${number}` : `${this.display}${number}`
+    // },
+    },
+    
+    point() {
+      if (this.display.indexOf('.') == -1){ //檢查display是否有.，若沒有則+上.
+        this.display += '.';
       }
     },
 
     clear() {
-      this.display ='0'
+      this.display ='0' //清空display
     },
 
     backspace() {
-      this.display = this.display.slice(0,-1);
-      if (this.display == ''){
+      this.display = this.display.slice(0,-1); //刪除最後一個字
+      if (this.display == ''){ //若刪除後=0則顯示0
           this.display = 0;
         }
       },
+
+    percent() {
+      parseInt(this.display)
+      this.display *= 0.01
     }
+
+    },
 };
 </script>
 
