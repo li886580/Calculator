@@ -1,11 +1,15 @@
 <template>
-  <div class="content">
+  <div class="content"
+  @keydown.numone="counter('1')" 
+  @keydown.enter="equal()" 
+  @keydown.delete="backspace()" 
+  tabindex="0">
     <div class="calculatorBody">
       <div class="showValue">
         <p>{{ display }}</p>
       </div>
       <div class="btnGroup">
-        <div class="btnGroup_negative btnGroup_operator">
+        <div class="btnGroup_negative btnGroup_operator" @click="display = display*-1">
           <p>+/-</p>
         </div>
         <div class="btnGroup_percent btnGroup_operator" @click="percent()">
@@ -92,7 +96,7 @@ export default {
 
   methods:{
     counter(number) {
-      if (this.enter==true){ //處理按=後接運算元 取消所有運算回復成0
+      if (this.ente == true){ //處理按=後接運算元 取消所有運算回復成0
         this.display = '0'
         this.enter = false
       }
@@ -119,34 +123,35 @@ export default {
     },
 
     expression(operatorBtn){
-      let beforeOperatorInFunction = this.beforeOperator
-      function calculation(a, b, c){
-        switch (beforeOperatorInFunction){
-          case '+':
-            a = b + c
-            break;
-          case '-':
-            a = b - c;
-            break;
-          case '*':
-            a = b * c;
-            break;
-          case '/':
-            a = b / c;
-            break;
-        }
-        return a
-      }
-      
-      // if (this.enter == true){ //處理按=後接運算子
-      //   this.enter = false
+      // let beforeOperatorInFunction = this.beforeOperator
+      // function calculation(a, b, c){
+      //   switch (beforeOperatorInFunction){
+      //     case '+':
+      //       a = b + c
+      //       break;
+      //     case '-':
+      //       a = b - c;
+      //       break;
+      //     case '*':
+      //       a = b * c;
+      //       break;
+      //     case '/':
+      //       a = b / c;
+      //       break;
+      //   }
+      //   return a
       // }
+      
+      if (this.enter == true){ //處理按=後接運算子
+        this.enter = false
+      }
       
       if (this.beforeOperator == ''){
         this.operator = operatorBtn
       }
       else {
-        this.display = calculation(this.display, parseFloat(this.beforeDisplay), parseFloat(this.display));
+        this.calculation()
+        // this.display = calculation(this.display, parseFloat(this.beforeDisplay), parseFloat(this.display));
         this.beforeDisplay = ''
         this.beforeOperator = ''
         this.operator = operatorBtn
@@ -160,6 +165,13 @@ export default {
       if (this.enter==true){ //處理按=後按. 取消所有運算回復成0+.
         this.display = '0'
         this.enter = false
+      }
+
+      if (this.operator != ''){ //按運算子後按. 變成0+.
+        this.beforeDisplay = this.display
+        this.beforeOperator = this.operator
+        this.display = '0'
+        this.operator = ''
       }
 
       if (this.display.indexOf('.') == -1){ //檢查display是否有.，若沒有則+上.
@@ -176,15 +188,16 @@ export default {
     },
 
     backspace() {
-      this.display = this.display.slice(0,-1); //刪除最後一個字
+      if (this.operator == '' && this.enter == false) { //不可清除讓運算的結果
+        this.display = this.display.slice(0,-1); //刪除最後一個字
+      }
       if (this.display == ''){ //若刪除後=0則顯示0
           this.display = '0';
         }
       },
 
     percent() {
-      if (this.enter==true){ //處理按=後接運算元 取消所有運算回復成0
-        this.display = '0'
+      if (this.enter == true){ //處理按=後接運算子
         this.enter = false
       }
 
@@ -193,33 +206,57 @@ export default {
     },
 
     equal() {
-      let beforeOperatorInFunction = this.beforeOperator
-      function calculation(a, b, c){
-        switch (beforeOperatorInFunction){
-          case '+':
-            a = b + c
-            break;
-          case '-':
-            a = b - c;
-            break;
-          case '*':
-            a = b * c;
-            break;
-          case '/':
-            a = b / c;
-            break;
-        }
-        return a
-      }
+      // let beforeOperatorInFunction = this.beforeOperator
+      // function calculation(a, b, c){
+      //   switch (beforeOperatorInFunction){
+      //     case '+':
+      //       a = b + c
+      //       break;
+      //     case '-':
+      //       a = b - c;
+      //       break;
+      //     case '*':
+      //       a = b * c;
+      //       break;
+      //     case '/':
+      //       a = b / c;
+      //       break;
+      //   }
+      //   return a
+      // }
       
       if (this.beforeOperator !='') {
-        this.display = calculation(this.display, parseFloat(this.display), parseFloat(this.beforeDisplay));
+        this.calculation()
+        // this.display = calculation(this.display, parseFloat(this.display), parseFloat(this.beforeDisplay));
         this.beforeDisplay = ''
         this.operator = ''
         this.beforeOperator = ''
         this.enter = true
       }
     },
+    calculation(){
+      let b = parseFloat(this.beforeDisplay)
+      let c = parseFloat(this.display)
+      switch (this.beforeOperator){
+        case '+':
+          this.display = b + c;
+          break;
+        case '-':
+          this.display = b - c;
+          break;
+        case '*':
+          this.display = b * c;
+          break;
+        case '/':
+          this.display = b / c;
+          break;
+      }
+      this.display = this.display.toString()
+      return this.display
+    },
+
+    
+
 
   }
 };
