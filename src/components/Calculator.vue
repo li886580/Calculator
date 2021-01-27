@@ -1,8 +1,7 @@
 <template>
   <div class="content"
-  @keydown.numone="counter('1')" 
+  @keydown="click"
   @keydown.enter="equal()" 
-  @keydown.delete="backspace()" 
   tabindex="0">
     <div class="calculatorBody">
       <div class="showValue">
@@ -84,6 +83,8 @@
 
 <script>
 export default {
+
+  
   data() {
     return {
       display: '0',
@@ -235,30 +236,159 @@ export default {
       }
     },
     calculation(){
+      function accAdd(arg1,arg2) { //處理+浮點數問題
+        var r1,r2,m; 
+        try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0} 
+        try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0} 
+        m=Math.pow(10,Math.max(r1,r2));
+        return (arg1*m+arg2*m)/m;
+      }
+      function accSubtr(arg1,arg2) { //處理-浮點數問題
+        var r1,r2,m,n;
+        try {
+          r1=arg1.toString().split(".")[1].length;
+        } catch(e){r1=0}
+        try {
+          r2=arg2.toString().split(".")[1].length;
+        } catch(e){r2=0}
+        m=Math.pow(10,Math.max(r1,r2));
+        n=(r1>=r2)?r1:r2;
+        return ((arg1*m-arg2*m)/m).toFixed(n);
+      }
+      function accMul(arg1,arg2) { //處理*浮點數問題
+        var m=0,s1=arg1.toString(),s2=arg2.toString(); 
+        try {
+          m+=s1.split(".")[1].length;
+        } catch(e){} 
+        try {
+          m+=s2.split(".")[1].length;
+        } catch(e){} 
+        return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m);
+      }
+      function accDiv(arg1,arg2) { //處理/浮點數問題
+        var t1=0,t2=0,r1,r2; 
+        try {
+          t1=arg1.toString().split(".")[1].length;
+        } catch(e){} 
+
+        try {
+          t2=arg2.toString().split(".")[1].length;
+        } catch(e){} 
+
+        with(Math){ 
+          r1=Number(arg1.toString().replace(".",""));
+          r2=Number(arg2.toString().replace(".",""));
+          return (r1/r2)*pow(10,t2-t1); 
+        } 
+      }
+
       let b = parseFloat(this.beforeDisplay)
       let c = parseFloat(this.display)
       switch (this.beforeOperator){
         case '+':
-          this.display = b + c;
+          this.display = accAdd(b, c);
           break;
         case '-':
-          this.display = b - c;
+          this.display = accSubtr(b, c);
           break;
         case '*':
-          this.display = b * c;
+          this.display = accMul(b, c);
           break;
         case '/':
-          this.display = b / c;
+          this.display = accDiv(b, c);
           break;
       }
       this.display = this.display.toString()
       return this.display
     },
 
-    
+    click(e){
+      switch (e.keyCode) {
+        case 48:
+        case 96:
+          this.counter('0');
+          break;
 
+        case 49:
+        case 97:
+          this.counter('1');
+          break;
 
-  }
+        case 50:
+        case 98:
+          this.counter('2');
+          break;
+
+        case 51:
+        case 99:
+          this.counter('3');
+          break;
+
+        case 52:
+        case 100:
+          this.counter('4');
+          break;
+
+        case 53:
+        case 101:
+          this.counter('5');
+          break;
+
+        case 54:
+        case 102:
+          this.counter('6');
+          break;
+
+        case 55:
+        case 103:
+          this.counter('7');
+          break;
+
+        case 56:
+        case 104:
+          this.counter('8');
+          break;
+
+        case 57:
+        case 105:
+          this.counter('9');
+          break;
+
+        case 107:
+        case 187:
+          this.expression('+');
+          break;
+
+        case 109:
+        case 189:
+          this.expression('-');
+          break;
+
+        case 106:
+          this.expression('*');
+          break;
+
+        case 111:
+        case 220:
+          this.expression('/');
+          break;
+
+        case 110:
+        case 190:
+          this.point();
+          break;
+
+        case 8:
+          this.backspace();
+          break;
+
+        case 46:
+          this.clear();
+          break;
+      }
+    }
+  },
+
 };
 </script>
 
