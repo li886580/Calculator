@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+let math = require('mathjs');
 // import './assets/css/vendors/CSS Reset.css'
 
 Vue.config.productionTip = false
@@ -23,7 +24,7 @@ Vue.config.keyCodes = { //自訂按鍵修飾福
   delete: 46,
 };
 // Vue.config.keyCodes.num0 = 48
-
+Vue.prototype.$math = math
 new Vue({
   render: h => h(App),
 }).$mount('#app')
