@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 let math = require('mathjs');
+// const { create, all } = require('mathjs')
+// const config = {
+// number:'BigNumber',
+// precision:20
+// }
+// const math = create(all,config)
 
 Vue.config.productionTip = false
 Vue.config.keyCodes = { //自訂按鍵修飾福

@@ -193,12 +193,12 @@ export default {
         this.enter = true
       }
     },
-    calculation(){      
-      let b = parseFloat(this.beforeDisplay)
-      let c = parseFloat(this.display)
+    calculation(){
+      let b = this.$math.bignumber(parseFloat(this.beforeDisplay)) //利用this.$math.bignumber格式化數據類型
+      let c = this.$math.bignumber(parseFloat(this.display)) //利用this.$math.bignumber格式化數據類型
       switch (this.beforeOperator){
         case '+':
-          this.display = this.$math.add(b,c);
+          this.display = this.$math.add(b, c);
           break;
         case '-':
           this.display = this.$math.subtract(b, c);
@@ -305,7 +305,6 @@ export default {
       return display.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
     }
   }
-
 };
 </script>
 
